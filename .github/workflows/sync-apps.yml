@@ -1,0 +1,24 @@
+name: sync-apps
+# Keeps this store identical to the published apps: the app folder from the newest release tag of
+# christhealien/blake2b-asic-control (tags v*) and christhealien/datum-gateway-umbrel (tags datum-v*).
+# Runs every 6 hours, and on demand (Actions -> sync-apps -> Run workflow).
+on:
+  schedule:
+    - cron: "11 */6 * * *"
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Copy the apps from their repos
+        run: scripts/sync-apps.sh
+      - name: Commit and push if anything changed
+        run: |
+          set -eu
+          git add -A
+          git diff --cached --quiet && { echo "store already matches the app repos"; exit 0; }
+          git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -m "Sync apps with their repos"
+          git push
