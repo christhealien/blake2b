@@ -5,7 +5,7 @@
 set -eu
 OWNER="${OWNER:-christhealien}"
 BASE="${BASE:-https://github.com/$OWNER}"
-APPS="${APPS:-blake2b-asic-control|$BASE/blake2b-asic-control|v*;blake2b-datum-gateway|$BASE/datum-gateway-umbrel|datum-v*}"
+APPS="${APPS:-blake2b-asic-control|$BASE/blake2b-asic-control|v*;blake2b-datum-gateway|$BASE/datum-gateway-umbrel|datum-v*;blake2b-mempool|$BASE/mempool-umbrel|mempool-v*}"
 tmp="$(mktemp -d)"; trap 'rm -rf "$tmp"' EXIT
 IFS=';'
 for entry in $APPS; do
