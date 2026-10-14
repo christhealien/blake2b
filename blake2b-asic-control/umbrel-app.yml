@@ -1,0 +1,280 @@
+manifestVersion: 1
+id: blake2b-asic-control
+name: Blake2b ASIC Control
+tagline: A fleet dashboard, presets, schedules and a per-chip auto-tuner for Blake2b miners
+icon: https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/icon.svg?v=1.18.2
+category: developer
+version: "1.18.2"
+port: 8790
+description: >-
+  A local control panel for the Blake2b miners on your network: the SC line (SC Lite,
+  SC-BOX / SC-BOX II, SC5 Pro / SC5 Pro II) and the HS line (HS Box). Every miner is controlled on
+  its own, and nothing leaves your network unless you turn on notifications.
+
+
+  Fleet: a card per miner with its 20-second hashrate, a 24-hour hashrate graph with marks for
+  restarts and setting changes, one-click presets, the pool list, restart and an estimated power
+  draw. The Miner page adds the live stats, the same graph, a chip map of every chip on the hash
+  boards, the best share (a record that survives restarts) and rejected shares sorted into stale
+  (pool timing) and not stale.
+
+
+  Presets: High, Middle, Low and Lowest power per miner (clock, voltage, PV and the fan curve to run
+  them with), plus Idle, the firmware's own sleep mode. The Schedule paints them across a week of
+  half-hour blocks, with scheduled restarts on the same grid. Fan curves are drawn by dragging
+  points; each miner runs its own.
+
+
+  The Tuner (SC Lite) maps every clock from underclock to overclock and finds the lowest voltage
+  each one runs cleanly, by watching every chip's hardware errors against that chip's own normal
+  rate while holding the boards at a temperature you choose. It confirms the winner and builds and
+  tests the four presets, each with its own fan curve, and can rebuild the presets later (for
+  example at another temperature) without a new search. Several miners can tune at once. On the
+  SC Box and HS Box the app sets the clock only (presets, a clock control and a clock tuner) and
+  their Miner page sets the firmware's fan target.
+
+
+  Notifications go to Telegram or Discord: a miner offline, hot, low hashrate, restarted on its
+  own, a tuning run finished, a new best-share record, a weak chip or a share rejected for a
+  reason other than stale. Three home-screen widgets show the fleet at a glance.
+
+
+  Uses the miners' stock web API only: no firmware changes. Sign in with the default username and
+  password shown here, then add your miners under Settings (and set your time zone there).
+developer: christhealien (built on Maveth's web dashboard)
+website: https://github.com/christhealien/blake2b-asic-control
+submitter: christhealien
+submission: https://github.com/christhealien/blake2b-asic-control
+repo: https://github.com/christhealien/blake2b-asic-control
+support: https://github.com/christhealien/blake2b-asic-control/issues
+gallery:
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/1.png?v=1.18.2
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/2.png?v=1.18.2
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/3.png?v=1.18.2
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/4.png?v=1.18.2
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/5.png?v=1.18.2
+  - https://raw.githubusercontent.com/christhealien/blake2b-asic-control/master/blake2b-asic-control/gallery/6.png?v=1.18.2
+releaseNotes: |-
+  **What's new in 1.18.2**
+
+  - On the Miner page, **rejected shares** now sit with the 24-hour hashrate graph (which marks them too)
+    instead of with the best share, on the same 24 hours, size and time axis as the graph, so a reject sits
+    right under its mark.
+
+  **1.18.0**
+
+  - **Power estimates for the SC Box and HS Box** on the Fleet cards, the Miner page, presets and the
+    overview widget, from a tester's wall-meter readings (power follows the clock on these boxes).
+    Calibrate it to your unit on its Miner page.
+  - **Firmware check:** the Miner page says when the maker lists newer firmware for a model, with a link
+    to its firmware page. The app never installs firmware.
+  - **Tuner files for sending:** a zip with IP and MAC addresses, pool addresses and the miner's name
+    taken out, for sending to someone helping you.
+
+  **1.17.0**
+
+  - **Clock control for the SC Box and HS Box.** Their Miner page has a clock box, Profiles makes four
+    clock presets from the clock the box runs now (High, then 25, 50 and 75 MHz lower), and schedules can
+    use them. Only the clock changes: in testing a lower voltage made no measurable difference in power,
+    so the voltage and fans stay as the miner has them. Nothing is set above stock.
+  - **A clock tuner for the SC Box and HS Box** (Tuner page): it learns every chip's normal error rate,
+    steps the clock up 25 MHz at a time until a step isn't clean, confirms the fastest clean clock, then
+    builds and tests the four presets. Stopping it puts back exactly what the miner ran before. These
+    are the first runs on these models: watch the first steps.
+  - The chip list on the SC Box and HS Box now reads their chip data.
+
+  **1.16.3**
+
+  - **Safer "go back" for miners on their stock plan.** Tester data from an HS Box showed that turning
+    the miner's manual setting off doesn't make it run its stock plan again: it keeps the last clock
+    written. The tuner and the schedule now write the stock plan's clock and voltage first (which takes
+    effect at once) and then switch back to the stock plan, so the miner really runs what it ran before.
+
+  **1.16.2**
+
+  - **Graph times on the hour, in 24-hour time:** the hashrate graphs mark full hours (00:00, 06:00,
+    12:00, 18:00 on the Miner page; every 12 hours on a card) where they fall, with the day at midnight
+    and "now" at the right edge. The rejected-shares strip marks each midnight. Times elsewhere on the
+    pages are always 24-hour too.
+
+  **1.16.1**
+
+  A full bug sweep. The most important fixes:
+
+  - **Tuner safety:** a run always puts the miner back on what it really ran before (including its stock
+    plan or Idle, not an old manual setting); it stops properly when the app crashes or updates; a test
+    no longer passes if the miner restarted during it or its setting changed; no temperature readings
+    stops the run; the auto fan no longer writes during a run.
+  - **Hashrate graphs show clock times** (in your time zone from Settings) instead of "24 h ago", with
+    "now" at the right edge. The Miner page graph and the rejected-shares strip read well on phones.
+  - **Schedule:** daylight-saving changes no longer re-apply presets; saving a schedule mid-stretch still
+    goes back to what the miner ran before.
+  - **Notifications** no longer stop for a miner after it was put on Idle.
+  - **Best share history** survives a power cut (a backup copy is kept).
+  - **Privacy:** reports now also remove IPv6 addresses and pool host:port addresses.
+  - Many smaller fixes: Take manual control on the right miner, the power estimate on a stock-plan
+    miner, the quick bar's Apply, the fan curve editor fields, unsaved notification edits, chip map
+    contrast in dark mode, and a rare freeze when two parts of the app talked to one miner at once.
+
+  **1.16.0**
+
+  - **Fan target for the SC Box and HS Box.** Their firmware ignores fan numbers and runs its own fan
+    loop, holding the control board at a target temperature. The Miner page's fan panel now sets that
+    target for these two models only (SC Box 65–75 °C, HS Box 70–80 °C): lower is cooler and louder,
+    higher is quieter and warmer. Only the target is written; clock, voltage and the rest stay as the
+    miner has them. Tested on both: the target holds; the SC Box's fans run near full speed for about
+    15 minutes after a change.
+
+  **1.15.9**
+
+  - **Efficiency is shown in J/TH** (joules per terahash) instead of W/TH: the same number, in the unit
+    miners are usually rated in. On the Fleet card, the Miner page, the presets and the tuner's tests.
+
+  **1.15.8**
+
+  - **Better home-screen widgets.** The miner list now fits each miner's numbers on one line on a phone
+    (4.80 TH · 56° · best 945P), so the best share is readable. New **Fleet health** widget: two gauges,
+    hashrate against its own 24-hour average and the hottest board against your heat alert. The overview
+    shows hashrate, miners online (or the tuner's progress), the whole fleet's estimated power and the
+    best share.
+    Add the new widget from Umbrel's widget picker.
+  - **Auto fan control leaves SC Box and HS Box alone:** on those models the miner's own fan control
+    stays in charge (their fan settings don't hold, and each write sets off a long fan spike).
+
+  **1.15.7**
+
+  - With **Best share numbers → Both**, the Fleet card shows best share and record on a line each, their
+    numbers lined up (the two long values used to wrap raggedly). With one number it stays on one line.
+
+  **1.15.6**
+
+  - **Settings → Best share numbers:** show best shares and records like DATUM and mempool (the
+    default, for example 5.42P), as the miner's own numbers (1.26 M, as before 1.15.5), or both
+    (5.42P (1.26 M)). Only the display changes, so you can switch any time.
+  - **New gallery images** with best shares in the new format.
+
+  **1.15.5**
+
+  - **Best share and record on the same scale as DATUM and mempool:** the miner counts share difficulty
+    in units of 2^32 hashes; it's now shown in hashes, like DATUM's share difficulty and the network
+    difficulty, and in their style (for example 5.42P next to the network's 21.85E). Older numbers in the
+    record are converted too.
+  - **The page no longer jumps on refresh** (and the scrollbar no longer flashes): a value that got longer
+    or shorter could make a Fleet card one line taller or shorter. Cards now keep their height, and the
+    "avg since restart" line stays on one line.
+
+  **1.15.4**
+
+  - **No more flicker during a restart:** the Fleet card's restart bar and the greyed-out Restart button
+    no longer blink off each time the page refreshes.
+
+  **1.15.3**
+
+  - Groundwork for the StartOS package (nothing changes on Umbrel): a command to set the login for a
+    platform that makes the password itself, and a StartOS sign-in hint on the login page.
+
+  **1.15.2**
+
+  - **A hashrate scale on both sides of the 24-hour graphs**, on the Fleet cards (three levels) and the
+    Miner page (up to five), with faint level lines across, in TH/s (GH/s for a slower miner).
+  - **Download report says plainly that nothing private goes in it**, with the list of what's never
+    read, never written and taken out, right under the button.
+
+  **1.15.1**
+
+  - **A live "now" line on the Schedule page:** a mark at the current time on every day, bold on today
+    with the time above it, moving as the clock does. It follows the app's time zone (Settings → Time
+    zone), which the schedule runs on, even when your browser is in another one.
+
+  **1.15.0**
+
+  - **Download report** (Profiles, next to Probe): reads a miner, one request at a time and changing
+    nothing, and saves a zip of what it takes to support a model or firmware the app hasn't been tested
+    on, with the miner's log if you like. The MAC address, IP addresses, pool URLs, wallets, workers and
+    tokens are taken out, and the pool and WiFi settings are never read. Look it over, then attach it to
+    an issue on GitHub. A model the tuner hasn't been tested on says so there and points to it.
+
+  **1.14.0: the first public release**
+
+  - **A time zone setting** (Settings → Time zone). Schedules, restarts, logs and tuner files use the
+    app's time zone, which is UTC until you pick yours (it offers your browser's).
+  - **The 24-hour hashrate graph on the Miner page** too, between Live and Chips, and the Live panel's
+    Hashrate shows the latest 20-second reading like the Fleet card (the average since restart under it).
+  - **Graph marks that are close together share one label**, with every event in its hover.
+  - **Licensed MIT**, with the credits for the projects it builds on (Maveth's web dashboard, MIT;
+    crProductGuy's box tools, MIT). The app image is built on GitHub and pulled from
+    ghcr.io; the store is this GitHub repo.
+
+  **Earlier versions**
+
+  - **1.13.1:** Fleet card Hashrate tile shows the latest 20-second reading; Idle appears without a probe.
+  - **1.13.0:** Rebuild the presets from the last search; Idle preset; 24-hour hashrate graph on the
+    Fleet cards; rejected shares sorted into stale and not stale; best-share table shows the top 10.
+  - **1.12.1:** The tuner checks the miner accepts a fresh sign-in before it starts.
+  - **1.12.0:** Notifications on Telegram and Discord.
+  - **1.11.x:** Scheduled restarts; paint the week block by block; "the rest of the time: nothing".
+  - **1.10.x:** SC BOX and HS BOX shown as they really run (from real captures); best-share history;
+    safer tuner baseline (stock, what it runs now, or your own).
+  - **1.9.x:** The tuner maps every clock and voltage; chip health; power estimates; locks; security update.
+  - **1.8.x:** Best share tracking; Run plan; stock settings read from the firmware; one repo for the app
+    and its store.
+
+  Every version in detail: [CHANGELOG.md](https://github.com/christhealien/blake2b-asic-control/blob/master/CHANGELOG.md)
+dependencies: []
+path: ""
+deterministicPassword: true
+defaultUsername: umbrel
+widgets:
+  - id: "overview"
+    type: "four-stats"
+    refresh: "30s"
+    endpoint: "web:8788/widgets/overview"
+    link: ""
+    example:
+      type: "four-stats"
+      link: ""
+      items:
+        - title: "Hashrate"
+          text: "10.51"
+          subtext: "TH/s"
+        - title: "Online"
+          text: "2/2"
+          subtext: "miners"
+        - title: "Est. power"
+          text: "1.62"
+          subtext: "kW"
+        - title: "Best share"
+          text: "5.42P"
+          subtext: ""
+  - id: "health"
+    type: "two-stats-with-guage"
+    refresh: "30s"
+    endpoint: "web:8788/widgets/health"
+    link: ""
+    example:
+      type: "two-stats-with-guage"
+      link: ""
+      items:
+        - title: "avg 10.6"
+          text: "10.51"
+          subtext: "TH"
+          progress: 0.99
+        - title: "alert 80°"
+          text: "63"
+          subtext: "°C"
+          progress: 0.79
+  - id: "miners"
+    type: "list"
+    refresh: "30s"
+    endpoint: "web:8788/widgets/miners"
+    link: ""
+    example:
+      type: "list"
+      link: ""
+      items:
+        - subtext: "🟢 SC Lite 1 · Hashing · High"
+          text: "5.45 TH · 60° · best 5.42P"
+        - subtext: "🔧 SC Lite 2 · Tuning · testing 625 MHz"
+          text: "5.24 TH · 60° · best 52.8T"
+        - subtext: "🔴 HS Box · Offline"
+          text: "not answering"
