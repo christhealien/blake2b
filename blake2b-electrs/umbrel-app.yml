@@ -1,0 +1,36 @@
+manifestVersion: 1.1
+id: blake2b-electrs
+category: bitcoin
+name: Electrs (blake2b)
+version: "1.0.0"
+tagline: Your own Electrum server, in the blake2b look
+icon: https://raw.githubusercontent.com/christhealien/electrs-umbrel/master/blake2b-electrs/icon.svg
+description: >
+  Run your personal Electrum server and connect Electrum-compatible wallets (BitBoxApp, BlueWallet, Electrum,
+  Nunchuk, Phoenix, Sparrow and more) to it instead of a third-party server. Mempool and other apps in this
+  store use it to look up addresses and transactions.
+
+
+  This is the same Electrs server as Horizon's Electrs app (Electrs 0.10.10, the Horizon-btc build), with the
+  connection page restyled to match Blake2b ASIC Control, DATUM Gateway and Mempool: black, white and grey, readable on a phone.
+
+
+  It keeps the same ports, address and Tor service as Horizon's Electrs app, so wallets and Mempool keep working.
+  Do not run both at once. Powered by Electrs from Roman Zeyde; connection page based on the Umbrel Electrs app.
+developer: Roman Zeyde (Electrs); theme and packaging by christhealien
+website: https://github.com/christhealien/electrs-umbrel
+implements:
+  - electrs
+dependencies:
+  - bitcoin
+repo: https://github.com/christhealien/electrs-umbrel
+support: https://github.com/christhealien/electrs-umbrel/issues
+port: 2104
+gallery: []
+path: ""
+defaultPassword: ""
+releaseNotes: >
+  First release in the blake2b theme.
+submitter: christhealien
+backupIgnore:
+  - data/electrs/db/bitcoin

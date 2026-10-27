@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256">
+  <rect width="256" height="256" rx="56" fill="#000"/>
+  <!-- Electrs: an index server (stacked units) with a bolt -->
+  <rect x="52" y="52" width="152" height="40" rx="12" fill="#0e0e0e" stroke="#f4f4f4" stroke-width="7"/><circle cx="76" cy="72" r="6" fill="#7a7a7a"/><rect x="96" y="68" width="70" height="8" rx="4" fill="#5a5a5a"/><rect x="52" y="102" width="152" height="40" rx="12" fill="#0e0e0e" stroke="#f4f4f4" stroke-width="7"/><circle cx="76" cy="122" r="6" fill="#f4f4f4"/><rect x="96" y="118" width="40" height="8" rx="4" fill="#5a5a5a"/><rect x="52" y="152" width="152" height="40" rx="12" fill="#0e0e0e" stroke="#f4f4f4" stroke-width="7"/><circle cx="76" cy="172" r="6" fill="#7a7a7a"/><rect x="96" y="168" width="70" height="8" rx="4" fill="#5a5a5a"/>
+  <path d="M150 74 L118 128 H140 L128 182 L172 118 H148 Z" fill="#f4f4f4" stroke="#000" stroke-width="6" stroke-linejoin="round" transform="translate(30 18)"/>
+</svg>
