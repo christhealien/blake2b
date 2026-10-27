@@ -2,6 +2,10 @@
 
 # Delay booting Electrs until the RPC Tor Hidden Service is ready
 
+# Electrs runs as uid 1000; the data folder is created by Umbrel as root, which makes RocksDB fail with "Permission denied"
+mkdir -p "${APP_DATA_DIR}/data/electrs"
+chown -R 1000:1000 "${APP_DATA_DIR}/data/electrs"
+
 HIDDEN_SERVICE_FILE="${TOR_DATA_DIR}/app-${APP_ID}-rpc/hostname"
 
 if [[ -f "${HIDDEN_SERVICE_FILE}" ]]; then

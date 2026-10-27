@@ -2,7 +2,7 @@ manifestVersion: 1.1
 id: blake2b-electrs
 category: bitcoin
 name: Electrs (blake2b)
-version: "1.0.0"
+version: "1.0.1"
 tagline: Your own Electrum server, in the blake2b look
 icon: https://raw.githubusercontent.com/christhealien/electrs-umbrel/master/blake2b-electrs/icon.svg
 description: >
@@ -30,7 +30,7 @@ gallery: []
 path: ""
 defaultPassword: ""
 releaseNotes: >
-  First release in the blake2b theme.
+  Fixes "Permission denied" when Electrs creates its database folder.
 submitter: christhealien
 backupIgnore:
   - data/electrs/db/bitcoin
