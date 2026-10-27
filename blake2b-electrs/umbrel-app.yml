@@ -2,7 +2,7 @@ manifestVersion: 1.1
 id: blake2b-electrs
 category: bitcoin
 name: Electrs (blake2b)
-version: "1.0.1"
+version: "1.0.3"
 tagline: Your own Electrum server, in the blake2b look
 icon: https://raw.githubusercontent.com/christhealien/electrs-umbrel/master/blake2b-electrs/icon.svg
 description: >
@@ -30,7 +30,7 @@ gallery: []
 path: ""
 defaultPassword: ""
 releaseNotes: >
-  Fixes "Permission denied" when Electrs creates its database folder.
+  Fixes the connection page stuck on "Connecting to Electrs server" (wrong port), removes the Umbrel help link and the purple QR mark.
 submitter: christhealien
 backupIgnore:
   - data/electrs/db/bitcoin
