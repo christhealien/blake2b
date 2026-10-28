@@ -1,6 +1,7 @@
 name: sync-apps
 # Keeps this store identical to the published apps: the app folder from the newest release tag of
-# christhealien/blake2b-asic-control (tags v*) and christhealien/datum-gateway-umbrel (tags datum-v*).
+# christhealien/blake2b-asic-control (tags v*), datum-gateway-umbrel (datum-v*), mempool-umbrel (mempool-v*),
+# bitcoinknots-umbrel (knots-v*) and electrs-umbrel (electrs-v*).
 # Runs every 6 hours, and on demand (Actions -> sync-apps -> Run workflow).
 on:
   schedule:
@@ -18,7 +19,18 @@ jobs:
       - name: Commit and push if anything changed
         run: |
           set -eu
-          git add -A
-          git diff --cached --quiet && { echo "store already matches the app repos"; exit 0; }
-          git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -m "Sync apps with their repos"
-          git push
+          branch="$(git rev-parse --abbrev-ref HEAD)"
+          # The app repos can push to this store at the same moment. If the push is refused, start again from the
+          # newest store state and copy the apps once more, a few times, before giving up.
+          for attempt in 1 2 3 4; do
+            git add -A
+            git diff --cached --quiet && { echo "store already matches the app repos"; exit 0; }
+            git -c user.name=github-actions -c user.email=actions@users.noreply.github.com commit -m "Sync apps with their repos"
+            if git push origin "HEAD:$branch"; then exit 0; fi
+            echo "push refused (attempt $attempt), retrying from the newest store state"
+            git fetch origin "$branch"
+            git reset --hard "origin/$branch"
+            scripts/sync-apps.sh
+          done
+          echo "could not push after 4 attempts" >&2
+          exit 1
