@@ -2,7 +2,7 @@ manifestVersion: 1.1
 id: blake2b-electrs
 category: bitcoin
 name: Electrs (blake2b)
-version: "1.0.3"
+version: "1.1.0"
 tagline: Your own Electrum server, in the blake2b look
 icon: https://raw.githubusercontent.com/christhealien/electrs-umbrel/master/blake2b-electrs/icon.svg
 description: >
@@ -30,7 +30,8 @@ gallery: []
 path: ""
 defaultPassword: ""
 releaseNotes: >
-  Fixes the connection page stuck on "Connecting to Electrs server" (wrong port), removes the Umbrel help link and the purple QR mark.
+  Own Electrs server build that advertises the BLAKE2b service flag, so it keeps following the chain on
+  Bitcoin Knots 29.4.3 and newer. Also fixes the connection page, removes the Umbrel help link and the purple QR mark.
 submitter: christhealien
 backupIgnore:
   - data/electrs/db/bitcoin

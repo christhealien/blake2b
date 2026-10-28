@@ -7,7 +7,7 @@ services:
       APP_PORT: 3006
 
   app:
-    image: ghcr.io/christhealien/blake2b-electrs-ui:1.0.3
+    image: ghcr.io/christhealien/blake2b-electrs-ui:1.1.0
     depends_on:
       - electrs
     restart: on-failure
@@ -25,7 +25,7 @@ services:
         ipv4_address: $APP_ELECTRSBLAKE2B_IP
   
   electrs:
-    image: ghcr.io/horizon-btc/electrs:v0.10.10-blake2b.3@sha256:fc1fe3cc430553287c2e869adcd075fcc576cc56d65a961dd7f1975934fd9f62
+    image: ghcr.io/christhealien/blake2b-electrs-server:0.10.10-blake2b.4
     user: "1000:1000"
     restart: always
     environment:
@@ -36,6 +36,7 @@ services:
       ELECTRS_ELECTRUM_RPC_ADDR: "0.0.0.0:${APP_ELECTRSBLAKE2B_NODE_PORT}"
       ELECTRS_SERVER_BANNER: "Umbrel Electrs (${APP_VERSION})"
       ELECTRS_DB_DIR: "/data/db"
+      ELECTRS_DAEMON_DIR: "/data/.bitcoin"
     volumes:
       - "${APP_BITCOIN_DATA_DIR}:/data/.bitcoin:ro"
       - "${APP_DATA_DIR}/data/electrs:/data"
